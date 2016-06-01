@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+<meta name="theme-color" content="#FFC107">
+<link href="css/materialdesignicons.min.css" media="all" rel="stylesheet" type="text/css"/>
+
+<style>
+#toolbar {
+	width: 100%;
+}
+#box {
+	height: calc(100% - 96px);
+}
+#text {
+	box-sizing: border-box;
+	width: 100%;
+	height: 100%;
+	resize: none;
+	background: transparent;
+	outline: none;
+	border: none;
+	color: white;
+}
+</style>
+
+</head>
+
+<body ng-app="Notepad" ng-cloak>
+<div id="toolbar">
+<md-toolbar class="md-menu-toolbar">
+    <div layout="row">
+      <md-toolbar-filler layout layout-align="center center">
+        <md-icon md-svg-src='data:image/svg+xml,<svg viewBox="0 0 24 24"><g id="notepad"><path d="M14,17H7V15H14M17,13H7V11H17M17,9H7V7H17M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z"/></svg>'></md-icon>
+      </md-toolbar-filler>
+      <div>
+        <h2 class="md-toolbar-tools">Material Notepad Clone</h2>
+        <md-menu-bar>
+          <md-menu>
+            <button ng-click="$mdOpenMenu()">
+              File
+            </button>
+            <md-menu-content>
+              <md-menu-item><md-button>New<span class="md-alt-text">Ctrl+N</span></md-button></md-menu-item>
+              <md-menu-item><md-button>Open...<span class="md-alt-text">Ctrl+O</span></md-button></md-menu-item>
+              <md-menu-item><md-button>Save<span class="md-alt-text">Ctrl+S</span></md-button></md-menu-item>
+              <md-menu-item><md-button>Save As...</md-button></md-menu-item>
+              <md-menu-divider></md-menu-divider>
+              <md-menu-item><md-button>Page Setup...</md-menu-item>
+              <md-menu-item><md-button>Print...<span class="md-alt-text">Ctrl+P</span></md-button></md-menu-item>
+              <md-menu-divider></md-menu-divider>
+              <md-menu-item><md-button>Exit</md-button></md-menu-item>
+            </md-menu-content>
+          </md-menu>
+          <md-menu>
+            <button ng-click="$mdOpenMenu()">
+              Edit
+            </button>
+            <md-menu-content>
+              <md-menu-item><md-button>Undo<span class="md-alt-text">Ctrl+Z</span></md-button></md-menu-item>
+              <md-menu-divider></md-menu-divider>
+              <md-menu-item><md-button>Cut<span class="md-alt-text">Ctrl+X</span></md-button></md-menu-item>
+              <md-menu-item><md-button>Copy<span class="md-alt-text">Ctrl+C</span></md-button></md-menu-item>
+              <md-menu-item><md-button>Paste<span class="md-alt-text">Ctrl+V</span></md-button></md-menu-item>
+              <md-menu-item><md-button>Delete<span class="md-alt-text">Del</span></md-button></md-menu-item>
+              <md-menu-divider></md-menu-divider>
+              <md-menu-item><md-button>Find...<span class="md-alt-text">Ctrl+F</span></md-button></md-menu-item>
+              <md-menu-item><md-button>Find Next<span class="md-alt-text">F3</span></md-button></md-menu-item>
+              <md-menu-item><md-button>Replace...<span class="md-alt-text">Ctrl+H</span></md-button></md-menu-item>
+              <md-menu-item><md-button>Go To...<span class="md-alt-text">Ctrl+G</span></md-button></md-button></md-menu-item>
+              <md-menu-divider></md-menu-divider>
+              <md-menu-item><md-button>Select All<span class="md-alt-text">Ctrl+A</span></md-button></md-menu-item>
+              <md-menu-item><md-button>Time/Date<span class="md-alt-text">F5</span></md-button></md-menu-item>
+            </md-menu-content>
+          </md-menu>
+          <md-menu>
+            <button ng-click="$mdOpenMenu()">
+              Format
+            </button>
+            <md-menu-content>
+              <md-menu-item><md-button>Word Wrap</md-button></md-menu-item>
+              <md-menu-item><md-button>Font...</md-button></md-menu-item>
+            </md-menu-content>
+          </md-menu>
+          <md-menu>
+            <button ng-click="$mdOpenMenu()">
+              View
+            </button>
+            <md-menu-content>
+              <md-menu-item type="checkbox"><md-button>Status Bar</md-button></md-menu-item>
+            </md-menu-content>
+          </md-menu>
+          <md-menu>
+            <button ng-click="$mdOpenMenu()">
+              Help
+            </button>
+            <md-menu-content>
+              <md-menu-item><md-button>View Help</md-button></md-menu-item>
+              <md-menu-divider></md-menu-divider>
+              <md-menu-item><md-button>About Material Notepad Clone</md-button></md-menu-item>
+            </md-menu-content>
+          </md-menu>
+        </md-menu-bar>
+      </div>
+    </div>
+  </md-toolbar>
+</div>
+
+
+<div id="box">
+<textarea id="text"></textarea>
+</div>
+
+
+
+
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+<script type="text/javascript">
+angular.module('Notepad', ['ngMaterial'])
+.config(function($mdThemingProvider) {
+  $mdThemingProvider.theme('default')
+    .primaryPalette('orange')
+    .accentPalette('purple')
+    .dark();
+});
+</script>
+  
+</body>
+</html>
