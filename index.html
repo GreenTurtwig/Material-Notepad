@@ -3,9 +3,6 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
-<meta name="theme-color" content="#FFC107">
-<link href="css/materialdesignicons.min.css" media="all" rel="stylesheet" type="text/css"/>
-
 <style>
 #toolbar {
 	width: 100%;
@@ -17,40 +14,56 @@
 	box-sizing: border-box;
 	width: 100%;
 	height: 100%;
-	resize: none;
 	background: transparent;
 	outline: none;
 	border: none;
 	color: white;
+	resize: none;
+	white-space: nowrap;
+}
+@media print {
+    #text,body {
+    	color: black;
+    	background-color: white;
+    }
+    #toolbar {
+    	display: none;
+    }
+}
+md-toast.md-default-theme .md-toast-content {
+  background-color: #F5F5F5;
+  color: black;
+  margin-left: auto;
+  margin-right: auto;
+  width: 250px;
 }
 </style>
-
 </head>
 
 <body ng-app="Notepad" ng-cloak>
-<div id="toolbar">
+<div id="toolbar" ng-controller="Controller as ctrl">
 <md-toolbar class="md-menu-toolbar">
     <div layout="row">
       <md-toolbar-filler layout layout-align="center center">
-        <md-icon md-svg-src='data:image/svg+xml,<svg viewBox="0 0 24 24"><g id="notepad"><path d="M14,17H7V15H14M17,13H7V11H17M17,9H7V7H17M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z"/></svg>'></md-icon>
+        <md-icon md-svg-icon="$default:note-text"></md-icon>
       </md-toolbar-filler>
       <div>
-        <h2 class="md-toolbar-tools">Material Notepad Clone</h2>
+        <h2 class="md-toolbar-tools" id="title">untitled.txt</h2>
         <md-menu-bar>
           <md-menu>
             <button ng-click="$mdOpenMenu()">
               File
             </button>
             <md-menu-content>
-              <md-menu-item><md-button>New<span class="md-alt-text">Ctrl+N</span></md-button></md-menu-item>
-              <md-menu-item><md-button>Open...<span class="md-alt-text">Ctrl+O</span></md-button></md-menu-item>
-              <md-menu-item><md-button>Save<span class="md-alt-text">Ctrl+S</span></md-button></md-menu-item>
-              <md-menu-item><md-button>Save As...</md-button></md-menu-item>
+              <md-menu-item><md-button ng-click="ctrl.new()">New<span class="md-alt-text">{{'M-N'|KS}}</span></md-button></md-menu-item>
+              <md-menu-item><md-button ng-click="ctrl.open()">Open...<span class="md-alt-text">{{'M-O'|KS}}</span></md-button></md-menu-item>
+              <md-menu-item><md-button ng-click="ctrl.save()">Save<span class="md-alt-text">{{'M-S'|KS}}</span></md-button></md-menu-item>
+              <md-menu-item><md-button ng-click="ctrl.saveAs()">Save As...</md-button></md-menu-item>
               <md-menu-divider></md-menu-divider>
-              <md-menu-item><md-button>Page Setup...</md-menu-item>
-              <md-menu-item><md-button>Print...<span class="md-alt-text">Ctrl+P</span></md-button></md-menu-item>
-              <md-menu-divider></md-menu-divider>
-              <md-menu-item><md-button>Exit</md-button></md-menu-item>
+              <!--<md-menu-item><md-button>Page Setup...</md-menu-item>
+              <md-menu-item><md-button ng-click="ctrl.print()">Print...<span class="md-alt-text">Ctrl+P</span></md-button></md-menu-item>
+              <md-menu-divider></md-menu-divider>-->
+              <md-menu-item><md-button ng-click="ctrl.exit()">Exit</md-button></md-menu-item>
             </md-menu-content>
           </md-menu>
           <md-menu>
@@ -58,23 +71,24 @@
               Edit
             </button>
             <md-menu-content>
-              <md-menu-item><md-button>Undo<span class="md-alt-text">Ctrl+Z</span></md-button></md-menu-item>
+              <md-menu-item><md-button ng-click="ctrl.undo()">Undo<span class="md-alt-text">{{'M-Z'|KS}}</span></md-button></md-menu-item>
+              <md-menu-item><md-button ng-click="ctrl.redo()">Redo<span class="md-alt-text">{{'M-Y'|KS}}</span></md-button></md-menu-item>
               <md-menu-divider></md-menu-divider>
-              <md-menu-item><md-button>Cut<span class="md-alt-text">Ctrl+X</span></md-button></md-menu-item>
-              <md-menu-item><md-button>Copy<span class="md-alt-text">Ctrl+C</span></md-button></md-menu-item>
-              <md-menu-item><md-button>Paste<span class="md-alt-text">Ctrl+V</span></md-button></md-menu-item>
-              <md-menu-item><md-button>Delete<span class="md-alt-text">Del</span></md-button></md-menu-item>
+              <md-menu-item><md-button ng-click="ctrl.cut()">Cut<span class="md-alt-text">{{'M-X'|KS}}</span></md-button></md-menu-item>
+              <md-menu-item><md-button ng-click="ctrl.copy()">Copy<span class="md-alt-text">{{'M-C'|KS}}</span></md-button></md-menu-item>
+              <md-menu-item><md-button ng-click="ctrl.paste()">Paste<span class="md-alt-text">{{'M-V'|KS}}</span></md-button></md-menu-item>
+              <md-menu-item><md-button ng-click="ctrl.delete()">Delete<span class="md-alt-text">Del</span></md-button></md-menu-item>
               <md-menu-divider></md-menu-divider>
-              <md-menu-item><md-button>Find...<span class="md-alt-text">Ctrl+F</span></md-button></md-menu-item>
-              <md-menu-item><md-button>Find Next<span class="md-alt-text">F3</span></md-button></md-menu-item>
-              <md-menu-item><md-button>Replace...<span class="md-alt-text">Ctrl+H</span></md-button></md-menu-item>
-              <md-menu-item><md-button>Go To...<span class="md-alt-text">Ctrl+G</span></md-button></md-button></md-menu-item>
-              <md-menu-divider></md-menu-divider>
-              <md-menu-item><md-button>Select All<span class="md-alt-text">Ctrl+A</span></md-button></md-menu-item>
-              <md-menu-item><md-button>Time/Date<span class="md-alt-text">F5</span></md-button></md-menu-item>
+              <!--<md-menu-item><md-button ng-click="ctrl.find()">Find...<span class="md-alt-text">Ctrl+F</span></md-button></md-menu-item>
+              <md-menu-item><md-button ng-click="ctrl.findNext()">Find Next<span class="md-alt-text">F3</span></md-button></md-menu-item>
+              <md-menu-item><md-button ng-click="ctrl.replace()">Replace...<span class="md-alt-text">Ctrl+H</span></md-button></md-menu-item>
+              <md-menu-item><md-button ng-click="ctrl.goTo()" >Go To...<span class="md-alt-text">Ctrl+G</span></md-button></md-button></md-menu-item>
+              <md-menu-divider></md-menu-divider>-->
+              <md-menu-item><md-button ng-click="ctrl.selectAll()">Select All<span class="md-alt-text">{{'M-A'|KS}}</span></md-button></md-menu-item>
+              <md-menu-item><md-button ng-click="ctrl.timeDate()">Time/Date<span class="md-alt-text">{{'M-T'|KS}}</span></md-button></md-menu-item>
             </md-menu-content>
           </md-menu>
-          <md-menu>
+          <!--<md-menu>
             <button ng-click="$mdOpenMenu()">
               Format
             </button>
@@ -90,15 +104,15 @@
             <md-menu-content>
               <md-menu-item type="checkbox"><md-button>Status Bar</md-button></md-menu-item>
             </md-menu-content>
-          </md-menu>
+          </md-menu>-->
           <md-menu>
             <button ng-click="$mdOpenMenu()">
               Help
             </button>
             <md-menu-content>
-              <md-menu-item><md-button>View Help</md-button></md-menu-item>
+              <md-menu-item><md-button ng-click="ctrl.help()">View Help</md-button></md-menu-item>
               <md-menu-divider></md-menu-divider>
-              <md-menu-item><md-button>About Material Notepad Clone</md-button></md-menu-item>
+              <md-menu-item><md-button ng-click="ctrl.about()">About Material Notepad</md-button></md-menu-item>
             </md-menu-content>
           </md-menu>
         </md-menu-bar>
@@ -109,9 +123,8 @@
 
 
 <div id="box">
-<textarea id="text"></textarea>
+<textarea id="text" autofocus></textarea>
 </div>
-
 
 
 
@@ -123,14 +136,205 @@
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
 <script type="text/javascript">
+const {shell} = require('electron');
+var remote = require('electron').remote;
+var dialog = remote.require('electron').dialog;
+var fs = require('fs');
+var open = 0
+var canSave = 0
 angular.module('Notepad', ['ngMaterial'])
 .config(function($mdThemingProvider) {
   $mdThemingProvider.theme('default')
-    .primaryPalette('orange')
+    .primaryPalette('teal')
     .accentPalette('purple')
     .dark();
-});
+})
+.config(['$mdIconProvider', function($mdIconProvider) {
+	$mdIconProvider
+		.iconSet('$default', __dirname+'/icons/mdi-icons.svg', 24)
+	}])
+.filter('KS', function($window) {
+    return function(str) {
+      if (!str) return;
+      var keys = str.split('-');
+      var isOSX = /Mac OS X/.test($window.navigator.userAgent);
+      var seperator = (!isOSX || keys.length > 2) ? '+' : '';
+      var abbreviations = {
+        M: isOSX ? '⌘ + ' : 'Ctrl',
+        A: isOSX ? '⌥ + ' : 'Alt',
+        S: isOSX ? '⇧ + ' : 'Shift',
+      };
+      return keys.map(function(key, index) {
+        var last = index == keys.length - 1;
+        return last ? key : abbreviations[key];
+      }).join(seperator);
+    };
+  })
+.controller('Controller', function Controller($mdDialog, $mdToast, $document) {
+    var self = this;
+    $document.bind("keypress", function(keyPress) {
+      var key = keyPress.keyCode 
+        //console.log(key);
+        if (key === 14) {
+          self.new()
+        } else if (key === 15) {
+          self.open()
+        } else if (key === 19) {
+          self.save()
+        } else if (key === 20) {
+          self.timeDate()
+        }
+    });
+	  //File
+    self.new = function() {
+        $mdDialog.show($mdDialog.confirm()
+          .title('New File?')
+          .textContent("Do you want to create a new file? The current one won't be saved.")
+          .ok('OK')
+          .cancel('Cancel')
+        ).then(function() {
+          canSave = 0;
+          document.getElementById("text").value = "";
+          document.getElementById("title").innerHTML = "untitled.txt";
+        });
+    };
+    self.open = function() {
+ dialog.showOpenDialog({ filters: [
+   { name: '.txt', extensions: ['txt'] }
+  ]}, function (fileNames) {
+  if (fileNames === undefined) return;
+  var fileName = fileNames[0];
+  fs.readFile(fileName, 'utf-8', function (err, data) {
+    document.getElementById("text").value = data;
+    document.getElementById("title").innerHTML = fileName;
+    canSave = 1;
+  });
+ });   
+    };
+    self.save = function() {
+      if (canSave === 1) {
+fs.writeFile(document.getElementById("title").innerHTML, document.getElementById("text").value, function (err) {
+      if (err === null) {
+        $mdToast.show($mdToast.simple().textContent('Saved!'))
+      } else {
+        dialog.showErrorBox("File Save Error", err.message);
+      }
+    });
+      }
+      else {
+dialog.showSaveDialog({ filters: [
+     { name: '.txt', extensions: ['txt'] }
+    ]}, function (fileName) {
+    if (fileName === undefined) return;
+    fs.writeFile(fileName, document.getElementById("text").value, function (err) {
+      if (err === null) {
+        canSave = 1;
+        document.getElementById("title").innerHTML = fileName;
+        $mdToast.show($mdToast.simple().textContent('Saved!'))
+      } else {
+        dialog.showErrorBox("File Save Error", err.message);
+      }
+    });
+  });
+      }
+    };
+    this.saveAs = function() {
+  dialog.showSaveDialog({ filters: [
+     { name: '.txt', extensions: ['txt'] }
+    ]}, function (fileName) {
+    if (fileName === undefined) return;
+    fs.writeFile(fileName, document.getElementById("text").value, function (err) {
+      if (err === null) {
+        canSave = 1;
+        document.getElementById("title").innerHTML = fileName;
+        $mdToast.show($mdToast.simple().textContent('Saved!'))
+      } else {
+        dialog.showErrorBox("File Save Error", err.message);
+      }
+    });
+  });
+    };
+	  this.print = function() {
+		  setTimeout(function(){
+			  window.print();
+		  }, 1000);
+    };
+    this.exit = function() {
+    	var remote = require('electron').remote;
+		  var window = remote.getCurrentWindow();
+    	window.close();
+    };
+
+    //Edit
+    this.undo = function() {
+    	document.execCommand("undo");
+    };
+    this.redo = function() {
+    	document.execCommand("redo");
+    };
+    this.cut = function() {
+    	document.execCommand("cut");
+    };
+    this.copy = function() {
+    	document.execCommand("copy");
+    };
+    this.paste = function() {
+    	document.execCommand("paste");
+    };
+    this.delete = function() {
+    	document.execCommand("delete");
+    };
+    this.find = function() {
+        open = 1
+        $mdDialog.show($mdDialog.prompt()
+          .title('Find')
+          .textContent('Find what:')
+          .placeholder('Enter search here')
+          .ok('Find Next')
+          .cancel('Cancel')
+        ).then(function() {
+        	document.getElementById("text").focus();
+        	open = 0;
+        }, function() {
+        	document.getElementById("text").focus();
+        	open = 0;
+        });
+    };
+    this.selectAll = function() {
+    	document.getElementById("text").select();
+    };
+    this.timeDate = function() {
+    	var d = new Date();
+    	var hours = d.getHours();
+    	var minutes = d.getMinutes();
+    	var days = d.getDate();
+    	var months = d.getMonth() + 1;
+    	var years = d.getFullYear();
+    	document.getElementById("text").value += (hours+":"+minutes+" "+days+"/"+months+"/"+years)
+    };
+
+    //Help
+    this.help = function() {
+      shell.openExternal('https://github.com/GreenTurtwig/Material-Notepad/issues');
+    };
+    this.about = function() {
+        $mdDialog.show($mdDialog.alert()
+          .title('About')
+          .textContent('Material Notepad is just that, a "clone" of the Notepad in Windows made using Material Design. It runs on Windows, Mac and Linux.')
+          .ok('Close')
+      );
+    };
+  });
 </script>
-  
+
+<script type="text/javascript">
+//Keep textarea focused
+document.getElementById("text").onblur = function () {
+	if (open == 1) {}
+	else {
+		document.getElementById("text").focus();
+	}
+};
+</script>
 </body>
 </html>
