@@ -60,9 +60,9 @@ md-toast.md-default-theme .md-toast-content {
               <md-menu-item><md-button ng-click="ctrl.save()">Save<span class="md-alt-text">{{'M-S'|KS}}</span></md-button></md-menu-item>
               <md-menu-item><md-button ng-click="ctrl.saveAs()">Save As...</md-button></md-menu-item>
               <md-menu-divider></md-menu-divider>
-              <!--<md-menu-item><md-button>Page Setup...</md-menu-item>
+              <!--<md-menu-item><md-button>Page Setup...</md-menu-item>-->
               <md-menu-item><md-button ng-click="ctrl.print()">Print...<span class="md-alt-text">Ctrl+P</span></md-button></md-menu-item>
-              <md-menu-divider></md-menu-divider>-->
+              <md-menu-divider></md-menu-divider>
               <md-menu-item><md-button ng-click="ctrl.exit()">Exit</md-button></md-menu-item>
             </md-menu-content>
           </md-menu>
@@ -179,6 +179,8 @@ angular.module('Notepad', ['ngMaterial'])
           self.new()
         } else if (key === 15) {
           self.open()
+        } else if (key === 16) {
+          self.print()
         } else if (key === 19) {
           self.save()
         } else if (key === 20) {
@@ -254,7 +256,7 @@ dialog.showSaveDialog({ filters: [
     });
   });
     };
-	  this.print = function() {
+	  self.print = function() {
 		  setTimeout(function(){
 			  window.print();
 		  }, 1000);
