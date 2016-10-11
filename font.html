@@ -1,0 +1,46 @@
+<md-dialog aria-label="Mango (Fruit)">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Font</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-icon="close" aria-label="Close"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <md-select ng-model="fontSize" ng-attr-placeholder="{{fontSizePlaceholder}}" class="md-no-underline">
+                    <md-option value="8">8</md-option>
+                    <md-option value="9">9</md-option>
+                    <md-option value="10">10</md-option>
+                    <md-option value="11">11</md-option>
+                    <md-option value="12">12</md-option>
+                    <md-option value="14">14</md-option>
+                    <md-option value="16">16</md-option>
+                    <md-option value="18">18</md-option>
+                    <md-option value="20">20</md-option>
+                    <md-option value="22">22</md-option>
+                    <md-option value="24">24</md-option>
+                    <md-option value="26">26</md-option>
+                    <md-option value="28">28</md-option>
+                    <md-option value="36">36</md-option>
+                    <md-option value="48">48</md-option>
+                </md-select>
+                <md-checkbox ng-model="mono" aria-label="Roboto Mono">
+                    Roboto Mono
+                </md-checkbox>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="cancel()">
+                Cancel
+            </md-button>
+            <md-button ng-click="ok()">
+                OK
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

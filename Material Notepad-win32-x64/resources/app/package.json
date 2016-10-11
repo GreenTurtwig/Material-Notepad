@@ -1,7 +1,0 @@
-{
-  "name": "material-notepad",
-  "productName": "Material Notepad",
-  "description": "A Material Design Notepad",
-  "version": "1.0.0",
-  "main": "main.js"
-}
